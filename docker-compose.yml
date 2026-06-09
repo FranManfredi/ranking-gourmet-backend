@@ -21,17 +21,32 @@ services:
     ports:
       - "${PORT}:${PORT}"
     environment:
-      # Conexión interna dentro de la red de Docker (db en lugar de localhost)
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
       PORT: ${PORT}
       NODE_ENV: production
-      # Better Auth
       BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
       BETTER_AUTH_BASE_URL: ${BETTER_AUTH_BASE_URL}
+      FRONTEND_URL: ${FRONTEND_URL}
     depends_on:
       db:
         condition: service_healthy
     restart: on-failure
+
+  frontend:
+    platform: linux/amd64
+    image: ghcr.io/franmanfredi/ranking-gourmet-app:v1.0.0
+    container_name: ranking-gourmet-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      NODE_ENV: production
+      BACKEND_API_URL: ${BACKEND_API_URL}
+      BETTER_AUTH_BACKEND_URL: ${BETTER_AUTH_BACKEND_URL}
+      NEXT_PUBLIC_BACKEND_API_URL: ${NEXT_PUBLIC_BACKEND_API_URL}
+      NODE_OPTIONS: --max-old-space-size=768
+    ports:
+      - "8080:3000"
 
 volumes:
   postgres_data:

@@ -3,6 +3,8 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { admin } from "better-auth/plugins";
 import prisma from "../prisma.js";
 
+const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3001";
+
 export const auth = betterAuth({
     database: prismaAdapter(prisma, {
         provider: "postgresql",
@@ -53,8 +55,8 @@ export const auth = betterAuth({
     baseURL: process.env.BETTER_AUTH_BASE_URL || "http://localhost:3000",
     
     trustHost: true,
-    trustedProxies: ["loopback", "localhost:3001"],
-    trustedOrigins: ["http://localhost:3001"],
+    trustedProxies: ["loopback", frontendUrl],
+    trustedOrigins: [frontendUrl],
     rateLimit: {
         enabled: false
     }

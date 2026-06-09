@@ -11,9 +11,10 @@ import { isAuthenticated } from "./lib/auth/middleware/auth.middleware.js";
 import { isAdmin } from "./lib/auth/middleware/admin.middleware.js";
 
 const app: Express = express();
+const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3001";
 
 app.use(cors({
-  origin: "http://localhost:3001",
+  origin: frontendUrl,
   credentials: true,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
