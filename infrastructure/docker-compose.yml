@@ -24,6 +24,11 @@ services:
       NODE_ENV: production
       BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
       BETTER_AUTH_BASE_URL: ${BETTER_AUTH_BASE_URL}
+      INITIAL_USER_EMAIL: ${INITIAL_USER_EMAIL:-}
+      INITIAL_USER_PASSWORD: ${INITIAL_USER_PASSWORD:-}
+      INITIAL_USER_NAME: ${INITIAL_USER_NAME:-Admin}
+      INITIAL_USER_SURNAME: ${INITIAL_USER_SURNAME:-}
+      INITIAL_USER_ROLE: ${INITIAL_USER_ROLE:-admin}
     command: ["sh", "-c", "npx prisma migrate deploy && node dist/src/index.js"]
     depends_on:
       db:
