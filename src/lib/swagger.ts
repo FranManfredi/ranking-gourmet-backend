@@ -87,7 +87,21 @@ const options: swaggerJsdoc.Options = {
   apis: apiDocGlobs,
 };
 
-const specs = swaggerJsdoc(options);
+type SwaggerSpec = ReturnType<typeof swaggerJsdoc> & {
+  servers?: Array<{ url: string; description: string }>;
+};
+
+const specs = swaggerJsdoc(options) as SwaggerSpec;
+const publicApiUrl = process.env.PUBLIC_API_URL || process.env.BETTER_AUTH_BASE_URL;
+
+if (publicApiUrl) {
+  specs.servers = [
+    {
+      url: publicApiUrl,
+      description: 'Public server',
+    },
+  ];
+}
 
 export const setupSwagger = (app: Express) => {
   app.get('/api-docs.json', (_req, res) => {
