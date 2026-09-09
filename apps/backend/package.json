@@ -2,12 +2,14 @@
   "name": "ranking-gourmet",
   "version": "1.0.0",
   "description": "Ranking Gourmet Backend API",
-  "main": "dist/src/index.js",
+  "main": "dist/src/server.js",
   "type": "module",
   "scripts": {
     "dev": "nodemon",
-    "build": "tsc",
-    "start": "node dist/src/index.js",
+    "build": "prisma generate && tsc",
+    "vercel-build": "prisma generate && tsc",
+    "start": "node dist/src/server.js",
+    "db:migrate:deploy": "prisma migrate deploy",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
