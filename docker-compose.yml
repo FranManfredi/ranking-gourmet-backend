@@ -17,7 +17,8 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   backend:
-    build: .
+    build:
+      context: ./apps/backend
     ports:
       - "${PORT}:${PORT}"
     environment:
@@ -39,7 +40,8 @@ services:
 
   frontend:
     platform: linux/amd64
-    image: ghcr.io/franmanfredi/ranking-gourmet-app:v1.0.0
+    build:
+      context: ./apps/frontend
     container_name: ranking-gourmet-frontend
     restart: unless-stopped
     depends_on:

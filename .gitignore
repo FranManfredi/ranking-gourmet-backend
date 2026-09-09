@@ -1,6 +1,12 @@
 node_modules/
 dist/
 .env
+.env*
+.next/
+out/
+build/
+.vercel/
+*.tsbuildinfo
 .idea/
 *.log
 
